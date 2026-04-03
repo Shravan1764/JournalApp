@@ -1,0 +1,6 @@
+This is the flow file that i am creating to understand and use the project flow
+-> Overall
+1. Create the profile ,role user or admin, role of the admin can only be assigned by another admin
+        ->to create the journals for a particular user user auth details of that user
+2. a user can create as many journals
+3. and sentiment analysis usually done using ai but here we take the sentiment from the user itself
