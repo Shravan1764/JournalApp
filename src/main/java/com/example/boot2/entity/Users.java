@@ -24,11 +24,15 @@ public class Users {
     @NonNull
     private String username;
     private String email;
-    private String sentimentAnalysis;
+    private boolean sentimentAnalysis;
     @NonNull
     private String password;
     @DBRef
     private List<Journal> journalEntries = new ArrayList<>();
 
-    private List<String> roles;
+    private List<String> roles = new ArrayList<>();
+
+    public boolean getSentimentAnalysis() {
+        return sentimentAnalysis;
+    }
 }

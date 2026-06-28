@@ -28,9 +28,6 @@ public class Boot2Application {
 	public PlatformTransactionManager add(MongoDatabaseFactory dbFactory) {
 		return new MongoTransactionManager(dbFactory);
 	}
-
-
-
 }
 //platform tranastion manager
 //mongotransaction manager

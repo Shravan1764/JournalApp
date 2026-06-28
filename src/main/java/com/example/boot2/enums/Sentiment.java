@@ -1,11 +1,9 @@
 package com.example.boot2.enums;
 
 public enum Sentiment {
-    HAPPY,
-
-    SAD,
-
-    ANGRY,
-
-    ANXIOUS
+    VERY_NEGATIVE,
+    NEGATIVE,
+    NEUTRAL,
+    POSITIVE,
+    VERY_POSITIVE
 }

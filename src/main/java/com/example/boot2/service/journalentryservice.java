@@ -2,6 +2,7 @@ package com.example.boot2.service;
 
 import com.example.boot2.entity.Journal;
 import com.example.boot2.entity.Users;
+import com.example.boot2.enums.Sentiment;
 import com.example.boot2.repository.enitityrepository;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -24,12 +25,17 @@ public class journalentryservice {
     private enitityrepository enitityrepo;
     @Autowired
     private userService uService;
+    @Autowired
+    private SentimentAnalyzerService sentimentAnalyzerService;
 
    @Transactional
     public void save(Journal journal, String username) {
        try {
            Users usr = uService.findByUserName(username);
            journal.setDate(LocalDateTime.now());
+           // ML-based sentiment analysis: analyze journal text before saving
+           Sentiment sentiment = sentimentAnalyzerService.analyzeSentiment(buildTextForAnalysis(journal));
+           journal.setSentiment(sentiment);
            Journal saved = enitityrepo.save(journal);
            usr.getJournalEntries().add(saved);
            //at this position if I change the name of the user or set the user to null then
@@ -45,7 +51,26 @@ public class journalentryservice {
        }
     }
     public void save(Journal journal) {
+        // ML-based sentiment analysis: re-analyze on update
+        Sentiment sentiment = sentimentAnalyzerService.analyzeSentiment(buildTextForAnalysis(journal));
+        journal.setSentiment(sentiment);
         enitityrepo.save(journal);
+    }
+
+    /**
+     * Builds a combined text from journal title and description for sentiment analysis.
+     * Both fields are included because titles often carry strong sentiment signals.
+     */
+    private String buildTextForAnalysis(Journal journal) {
+        StringBuilder sb = new StringBuilder();
+        if (journal.getTitle() != null) {
+            sb.append(journal.getTitle());
+        }
+        if (journal.getDescription() != null) {
+            if (sb.length() > 0) sb.append(". ");
+            sb.append(journal.getDescription());
+        }
+        return sb.toString();
     }
     public  List<Journal> jetall() {
         return enitityrepo.findAll();

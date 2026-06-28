@@ -23,5 +23,4 @@ public class Journal {
     private String description;
     private LocalDateTime date;
     private Sentiment sentiment;
-
 }
