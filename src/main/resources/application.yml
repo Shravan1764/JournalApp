@@ -1,0 +1,59 @@
+spring:
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+      database: journaldb
+      auto-index-creation: true
+    redis:
+      host: ${REDIS_HOST}
+      port: 12900
+      password: ${PASSWORD_R}
+      timeout: 60000
+
+  # FIXED: Moved kafka inside the 'spring' block
+  kafka:
+    bootstrap-servers: pkc-41p56.asia-south1.gcp.confluent.cloud:9092
+    properties:
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: ${KAFKA_KEY_USERNAME}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      group-id: weekly-sentiment-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "com.example.boot2.model"
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: shrvnkmrsoni@gmail.com
+    password: ${PASSWORD}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
+weather:
+  api:
+    key: ${WEATHER_API_KEY}
+
+
+huggingface:
+  api:
+    token: ${HUGGINGFACE_KEY}
+
+
+#logging:
+#  level:
+#    net:
+#      example:
+#        boot2: DEBUG
+
+#server:
+#  port: 8081
+#  servlet:
+#    context-path: /journal
+# priority comandine->application.properties->applicationa.yml
