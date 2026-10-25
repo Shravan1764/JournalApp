@@ -20,6 +20,7 @@ public class Emailservice {
             mailSender.send(message);
         }catch (Exception e){
             e.printStackTrace();
+
         }
     }
 }
