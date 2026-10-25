@@ -12,7 +12,7 @@ spring:
 
   # FIXED: Moved kafka inside the 'spring' block
   kafka:
-    bootstrap-servers: pkc-41p56.asia-south1.gcp.confluent.cloud:9092
+    bootstrap-servers: pkc-619z3.us-east1.gcp.confluent.cloud:9092
     properties:
       security.protocol: SASL_SSL
       sasl.mechanism: PLAIN
